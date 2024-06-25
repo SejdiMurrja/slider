@@ -1,26 +1,36 @@
 Ne Html krijoj strukturen baze qe permban nje slider dhe nje form per upload te imazheve
+Shtoj nje div peer pagination
 
 Ne css stilizoj sliderin dhe elementet e tjere
 
 Ne js bej qe gjithe kodi do te ekzekutohet pasi DOM te jete ngarkuar plotesisht
 Perzgjedh elementet qe do te kene nje funksion te caktuar
- Per te treguar imazhet perdor function showSlide(index) qe ben shfaqjen e nje imazhi te caktuar ne baze te index
- dhe me slides.style.transform = `translateX(${-index * slideWidth}px) bej levizjen e fotove me 
- shumefishin e indeksit aktual dhe gjeresise se imazhit per te treguar imazhin e duhur
- Per te kaluar ndermjet imazheve me funksionin currentIndex = (currentIndex + 1) % slides.children.length i cili
- rrit indeksin aktual dhe perdor operatorin % për te kthyer indeksin ne fillim kur arrin fundin e listës së imazheve
- dhe me showSlide shfaqet imazhi 
- I njejti funksion showPrevSlide() per imazhin qe ndodhet para
- Me event listener nextBtn.addEventListener('click', showNextSlide) dhe prevBtn.addEventListener('click', showPrevSlide)
- shfaq imzhin tjeter kur klikoj
- Ngarkimin e fotove e bej me Array.from(files).forEach(file => { ... }); qe konverton FileList ne nje varg dhe 
- pershkon secilin skedar vetem nese skedari eshte imazh jo tjeter if (!file.type.startsWith('image/'))
- Me FileReader() lexon permbajtjen e skedarit dhe me const img = new Image() krijon objektin e ri ne kete rast imazh
- Shtoj nje klas slider-image per stilizimin e imazhit te njejte img.classList.add('slider-image')
- slide.appendChild(img) shtoj imazhin e ri ne div
- slides.appendChild(slide) shton divin te slides
- Per te shfaqur imazhet e reja perdor showSlide(currentIndex) 
- Per drag and drop shtoj nje event listener qe therret handleFiles kur ndryshon permbajtja e inputit te skedarit :
- fileInput.addEventListener('change', (event) => { ... }) me drag over edhe leave behet ngarkimi i filet kur terhiqet
-dhe leshohen ne kutine drag image
+Per te treguar imazhet perdor function showSlide(index) qe ben shfaqjen e nje imazhi te caktuar
+Perdor slides.style.transform = `translateX(${-index * slideWidth}px) qe te zhvendos slider-in e duhur  
+bazuar ne indeks dhe gjeresine e tij
+
+Krijoj butonat e pagination me function createPagination() dhe i shtoj ne container-in e pagination ku for krijon 
+buton te ri per cdo slide qe shtohet se bashku me numrin e slide-it
+if i shton klasen active per stlizimin e butonit kur klikohet butoni dhe e shton ne container e butonit me
+paginationContainer.appendChild(button)
+
+Me funksionin updatePagination mbaj te ndryshuar butonat pagination sipas slide-it qe shfaqet ku te gjithe children e
+konteinerit paginationContainer kthehen ne array dhe nepermjet forEach marrin butonin e caktuar
+
+Funksioni showPrevSlide ben kalimin te slideri i kaluar ku (currentIndex === 0) ? slides.children.length - 1
+ben qe nese eshte slide-i i pare e kalon ne te fundit ose thjesht ne slide e meparshem
+e njejta gje dhe me showNextSlide
+
+handleFiles bej ngarkimin e imazheve te reja me inout ku siguroj qe file i perzgjedhur eshte imazh jo tjeter
+shtoj img.classList.add('slider-image') per stilizimin e imazhit sipas kerkesave te slide-it
+me const slide = document.createElement('div') krijoj nje div te ri qe do mbaj imazhin i cili do te shtohet
+therras funksionin pagination per te perfshire slide e ri te butonat
+Per inputin e file-it dhe pjesen e drag drop perdor funksion setupFileHandlers i cili kap elmentin e html qe zgjidhet
+per tu ngarkuar dhe me addEventListener bej qe dragover te ndodhe te shtohet nje klase drag-over per stilizimin dhe
+drag leave per te hequr klasen kur file nuk eshte ne kutine e drag image 
+addEventListener 'drop bej remove klasen drag-over dhe me handleFiles ben perpunimin e file-it te zgjedhur
+
+
+
+
   
